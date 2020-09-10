@@ -1,0 +1,759 @@
+openapi: 3.0.0
+servers:
+  - url: ' https://api.census.gov'
+    description: Census API Server
+info:
+  description: |-
+    This is an OpenAPI spec developed by MTNA for documenting the Census API
+  
+    ### Overivew
+    Throughout this documentation, you will see the {dataset} path variable. This may be a single value, like `cbp`, but often it may be a combination of slash-separated values, like `pep/int_charage`
+    
+    The best way to find which dataset parameters you need is to start with a Dataset Discovery request. This will return the catalog of datasets available through the Census API, and all of the relevant information needed to work with them. All of the informational calls you see here (Variables, Geography, and Examples) are available on that page.
+    
+    
+  version: 1.0.0
+  title: Census API
+  termsOfService: ''
+  contact:
+    email: mtna@mtna.us
+    name: MTNA
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: Dataset Discovery
+  - name: Dataset Discovery (Timeseries)
+  - name: Variables
+  - name: Variables (Timeseries)
+  - name: Geography
+  - name: Geography (Timeseries)
+  - name: Queries
+  - name: Queries (Timeseries)
+  - name: Examples
+  - name: Examples (Timeseries)
+paths:
+  '/data/{year}/{dataset}/variables.html':
+    get:
+      tags:
+        - Variables
+      summary: 'Get a list of variables available for this dataset in HTML'
+      description: |-
+       A variable is each unit of data you are searching for in a dataset. Each variable that you can search for in a dataset has a name, which may be an acronym or meaningful on its own; e.g., `STNAME`, `POP`, `DATE_`. 
+      
+        In larger datasets, such as the American Community Survey, many of these names are a less intuitive alphabetical and numerical designation; e.g., `B02001_001E` (Unweighted Sample Count of the Population).
+        
+        <img width="1102" alt="variables" src="https://user-images.githubusercontent.com/20145532/92128459-6adbed80-edd0-11ea-8aff-a333b3e7f685.png">
+
+      operationId: Variables HTML
+      parameters:
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/dataset'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema: {}
+        
+      security: []
+  '/data/{year}/{dataset}/variables.xml':
+    get:
+      tags:
+        - Variables
+      summary: 'Get a list of variables available for this dataset in XML'
+      description: |-
+       A variable is each unit of data you are searching for in a dataset. Each variable that you can search for in a dataset has a name, which may be an acronym or meaningful on its own; e.g., `STNAME`, `POP`, `DATE_`. 
+      
+        In larger datasets, such as the American Community Survey, many of these names are a less intuitive alphabetical and numerical designation; e.g., `B02001_001E` (Unweighted Sample Count of the Population).
+      operationId: Variables XML
+      parameters:
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/dataset'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema: {}
+        
+      security: []
+  '/data/{year}/{dataset}/variables.json':
+    get:
+      tags:
+        - Variables
+      summary: 'Get a list of variables available for this dataset in JSON'
+      description: |-
+       A variable is each unit of data you are searching for in a dataset. Each variable that you can search for in a dataset has a name, which may be an acronym or meaningful on its own; e.g., `STNAME`, `POP`, `DATE_`. 
+      
+        In larger datasets, such as the American Community Survey, many of these names are a less intuitive alphabetical and numerical designation; e.g., `B02001_001E` (Unweighted Sample Count of the Population).
+
+      operationId: Variables JSON
+      parameters:
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/dataset'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Variables'
+      security: []
+      
+  '/data/timeseries/{dataset}/variables.html':
+    get:
+      summary: 'Get a list of variables available for this timeseries dataset in HTML'
+      description: |-
+       A variable is each unit of data you are searching for in a dataset. Each variable that you can search for in a dataset has a name, which may be an acronym or meaningful on its own; e.g., `STNAME`, `POP`, `DATE_`. 
+      
+        In larger datasets, such as the American Community Survey, many of these names are a less intuitive alphabetical and numerical designation; e.g., `B02001_001E` (Unweighted Sample Count of the Population).
+        
+        <img width="1102" alt="variables" src="https://user-images.githubusercontent.com/20145532/92128459-6adbed80-edd0-11ea-8aff-a333b3e7f685.png">
+
+      parameters:
+        - $ref: '#/components/parameters/dataset'
+      operationId: Timeseries Variables HTML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Variables (Timeseries)
+  '/data/timeseries/{dataset}/variables.xml':
+    get:
+      summary: 'Get a list of variables available for this timeseries dataset in XML'
+      description: |-
+       A variable is each unit of data you are searching for in a dataset. Each variable that you can search for in a dataset has a name, which may be an acronym or meaningful on its own; e.g., `STNAME`, `POP`, `DATE_`. 
+      
+        In larger datasets, such as the American Community Survey, many of these names are a less intuitive alphabetical and numerical designation; e.g., `B02001_001E` (Unweighted Sample Count of the Population).
+      parameters:
+        - $ref: '#/components/parameters/dataset'
+      operationId: Timeseries Variables XML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Variables (Timeseries)
+  '/data/timeseries/{dataset}/variables.json':
+    get:
+      summary: 'Get a list of variables available for this timeseries dataset in JSON'
+      description: |-
+       A variable is each unit of data you are searching for in a dataset. Each variable that you can search for in a dataset has a name, which may be an acronym or meaningful on its own; e.g., `STNAME`, `POP`, `DATE_`. 
+      
+        In larger datasets, such as the American Community Survey, many of these names are a less intuitive alphabetical and numerical designation; e.g., `B02001_001E` (Unweighted Sample Count of the Population).
+      parameters:
+        - $ref: '#/components/parameters/dataset'
+      operationId: Timeseries Variables JSON
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Variables'
+      tags:
+        - Variables (Timeseries)
+        
+  '/data/{year}/{dataset}/geography.html':
+    get:
+      summary: 'Get available geographies for this dataset in HTML'
+      description: '
+      
+         <img width="1175" alt="censusGeography" src="https://user-images.githubusercontent.com/20145532/92127788-a9bd7380-edcf-11ea-946a-e5ed7933a98e.png">'
+      parameters:
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/dataset'
+      operationId: Geography HTML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Geography
+  '/data/{year}/{dataset}/geography.xml':
+    get:
+      summary: 'Get available geographies for this dataset in XML'
+      description: ''
+      parameters:
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/dataset'
+      operationId: Geography XML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Geography
+  '/data/{year}/{dataset}/geography.json':
+    get:
+      summary: 'Get available geographies for this dataset in JSON'
+      description: ''
+      parameters:
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/dataset'
+      operationId: Geography JSON
+      responses:
+         '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Geographies'
+      tags:
+        - Geography
+        
+  '/data/timeseries/{dataset}/geography.html':
+    get:
+      summary: 'Get available geographies for this timeseries dataset'
+      description: '
+      
+      
+         <img width="1175" alt="censusGeography" src="https://user-images.githubusercontent.com/20145532/92127788-a9bd7380-edcf-11ea-946a-e5ed7933a98e.png">'
+      parameters:
+        - $ref: '#/components/parameters/dataset'
+      operationId: Timeseries Geography HTML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Geography (Timeseries)
+  '/data/timeseries/{dataset}/geography.xml':
+    get:
+      summary: 'Get available geographies for this timeseries dataset'
+      description: ''
+      parameters:
+        - $ref: '#/components/parameters/dataset'
+      operationId: Timeseries Geography XML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Geography (Timeseries)
+  '/data/timeseries/{dataset}/geography.json':
+    get:
+      summary: 'Get available geographies for this timeseries dataset'
+      description: ''
+      parameters:
+        - $ref: '#/components/parameters/dataset'
+      operationId: Timeseries Geography JSON
+      responses:
+         '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Geographies'
+      tags:
+        - Geography (Timeseries)
+        
+  '/data/{year}/{dataset}/examples.html':
+    get:
+      summary: 'Get example queries for this dataset'
+      description: '
+      Find example queries for this dataset in HTML format.
+      <img width="1183" alt="censusExamples" src="https://user-images.githubusercontent.com/20145532/92128729-ad052f00-edd0-11ea-976c-1bb3fc9a3702.png">'
+      parameters:
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/dataset'
+      operationId: Examples HTML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Examples
+  '/data/{year}/{dataset}/examples.xml':
+    get:
+      summary: 'Get example queries for this dataset'
+      description: ''
+      parameters:
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/dataset'
+      operationId: Examples XML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Examples
+  '/data/{year}/{dataset}/examples.json':
+    get:
+      summary: 'Get example queries for this dataset'
+      description: ''
+      parameters:
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/dataset'
+      operationId: Examples JSON
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Examples'
+      tags:
+        - Examples
+    
+  '/data/timeseries/{dataset}/examples.html':
+    get:
+      summary: 'Get example queries for this timeseries dataset'
+      description: '<img width="1183" alt="censusExamples" src="https://user-images.githubusercontent.com/20145532/92128729-ad052f00-edd0-11ea-976c-1bb3fc9a3702.png">'
+      parameters:
+        - $ref: '#/components/parameters/dataset'
+      operationId: Timeseries Examples HTML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Examples (Timeseries)
+  '/data/timeseries/{dataset}/examples.xml':
+    get:
+      summary: 'Get example queries for this timeseries dataset'
+      description: ''
+      parameters:
+        - $ref: '#/components/parameters/dataset'
+      operationId: Timeseries Examples XML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Examples (Timeseries)
+  '/data/timeseries/{dataset}/examples.json':
+    get:
+      summary: 'Get example queries for this timeseries dataset'
+      description: ''
+      parameters:
+        - $ref: '#/components/parameters/dataset'
+      operationId: Timeseries Examples JSON
+      responses:
+       '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Examples'
+      tags:
+        - Examples (Timeseries)
+        
+  '/data/{year}/{dataset}':
+    get:
+      summary: 'Build a query for a particular dataset'
+      description: |-
+       ### Required Variables
+       Required variables are the parameters that you need to include in your search; otherwise, your search will produce no data and an error message. Variables that are required will have the `required` property equal to `true'.
+       
+       ### Get Function
+       The get function (`get=`) specifies the required and selected variables you are requesting the API to give you. For example: 
+       `https://api.census.gov/data/2014/pep/natstprc?get=STNAME,POP&DATE_=7&for=state:*`
+       
+       ### Predicate
+       The predicate specifies how variables should be filtered or limited, and you can create predicates of geography, string variables, numeric variables, and time (in time series datasets). In this example, the predicate limits the search on the July 1, 2014 (`&DATE_=7`) population or housing unit estimate and for all states (`&for=state:*`): `https://api.census.gov/data/2014/pep/natstprc?get=STNAME,POP&DATE_=7&for=state:*`
+       
+         Please note:
+        * Predicates always start with an ampersand (`&`).
+        * A wildcard (`:*`) can be included to search for all the values of a variable. Wildcards work for geographies and string variables only.
+       * A variable should appear only once in a query ̶either in the get statement or as a predicate. In the example above, `DATE_` is a predicate (`&DATE_=7`), so you do not need to include it in the get statement (`?get=STATENAME,POP`). 
+       
+      
+      parameters:
+        - $ref: '#/components/parameters/year'
+        - $ref: '#/components/parameters/dataset'
+        - $ref: '#/components/parameters/get'
+        - $ref: '#/components/parameters/for'
+        - $ref: '#/components/parameters/key'
+      operationId: ''
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Queries
+  '/data/timeseries/{dataset}':
+    get:
+      summary: 'Build a query for a particular timeseries dataset'
+      description: ''
+      parameters:
+        - $ref: '#/components/parameters/dataset'
+        - $ref: '#/components/parameters/get'
+        - $ref: '#/components/parameters/for'
+        - $ref: '#/components/parameters/key'
+      operationId: ''
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Queries (Timeseries)
+        
+  /data.html:
+    get:
+      summary: 'List of Census API Datasets in HTML'
+      description: 'This displays a list of all of the available (non-timeseries) datasets, with links to Geographies, Variables, Examples, the API base URL and more. 
+   
+      <img width="1706" alt="censusDataHtml" src="https://user-images.githubusercontent.com/20145532/92127962-dffaf300-edcf-11ea-945b-9b49af18eb2a.png">
+     '
+      parameters: []
+      operationId: List of Census API Datasets in HTML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Dataset Discovery
+  /data.xml:
+    get:
+      summary: 'List of Census API Datasets in XML'
+      description: ''
+      parameters: []
+      operationId: List of Census API Datasets in XML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Dataset Discovery
+  /data.json:
+    get:
+      tags:
+        - Dataset Discovery
+      summary: List of Census API Datasets in JSON
+      description: ''
+      operationId: List of Census API Datasets in JSON
+      
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Catalog_JSON'
+       
+      security: []
+      
+  /data/timeseries.html:
+    get:
+      summary: 'Get a list of all of the timeseries datasets in HTML format'
+      description: >-
+        For some datasets available on the Census Data API, data are stored for
+        multiple points of time in one dataset, rather than across several datasets for individual
+        points of time. When this occurs, we refer to the dataset as a time series dataset.
+
+
+        You can limit by time in time series datasets by using the predicate &time. Please note that you cannot build a predicate with wildcards (:*) for time in a time series dataset. Note that "+"  is needed for time ranges, such as the time range from 1997 to 2012 (below).  
+        
+        Examples:
+
+        + &time=2015 – restricts the result to include data for 2015
+
+        + &time=from+1997+to+2012 – restricts the result to include data from
+        1997 to 2012
+
+        + &time=2015-01 – restricts the result to include data for January, 2015
+
+        + &time=2015-Q1 – restricts the result to include data for the first
+        quarter of 2015
+
+        + &time=from+2015-01 – restricts the result to include data from
+        January, 2015 to the present
+
+        + &time=to+2015-01 – restricts the result to include data up to January,
+        2015
+
+        + &time=from+2015-01+to+2015-06 – restricts the result to include data
+        from January, 2015 to June, 2015
+        
+        <img width="1738" alt="timeseriesDataHtml" src="https://user-images.githubusercontent.com/20145532/92128210-2cdec980-edd0-11ea-98f6-24bb8af2ef9b.png">
+
+      parameters: []
+      operationId: Get the list of time series datasets
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Dataset Discovery (Timeseries)
+  /data/timeseries.xml:
+    get:
+      summary: 'List of timeseries datsets in XML'
+      description: ''
+      parameters: []
+      operationId: Get timeseries datasets in XML
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Dataset Discovery (Timeseries)
+  /data/timeseries.json:
+    get:
+      summary: 'Get timeseries datasets in JSON'
+      description: ''
+      parameters: []
+      operationId: Get timeseries datasets in JSON
+      responses:
+         '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Catalog_JSON'
+      tags:
+        - Dataset Discovery (Timeseries)
+externalDocs:
+  description: >-
+    This OpenAPI spec was deveoped from the documentation at the census.gov
+    website
+  url: >-
+    https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-guide.pdf
+components:
+  schemas:
+    Catalog_JSON:
+      type: object
+      properties:
+        '@context':
+          type: string
+        '@id':
+          type: string
+        '@type':
+          type: string
+        conformsTo:
+          type: string
+        describedBy:
+          type: string
+        dataset:
+          type: array
+          items:
+            $ref: '#/components/schemas/Catalog_Dataset'
+    Catalog_Dataset:
+      type: object
+      properties:
+        c_dataset:
+          type: array
+          items:
+            type: string
+        c_geographyLink:
+          type: string
+        c_variablesLink:
+          type: string
+        c_tagsLink:
+          type: string
+        c_examplesLink:
+          type: string
+        c_groupsLink:
+          type: string
+        c_valuesLink:
+          type: string
+        c_documentationLink:
+          type: string
+        c_isTimeseries:
+          type: boolean
+        c_isCube:
+          type: boolean
+        c_isAvailable:
+          type: boolean
+        '@type':
+           type: string
+        title:
+          type: string
+        accessLevel:
+          type: string
+        bureauCode:
+          type: array
+          items:
+            type: string
+        description:
+           type: string
+        distribution:
+          $ref: '#/components/schemas/Distribution'
+        contactPoint:
+          $ref: '#/components/schemas/ContactPoint'
+        identifier:
+           type: string
+        keyword:
+          type: array
+          items:
+            type: string
+        license:
+           type: string
+        modified:
+           type: string
+        programCode:
+          type: array
+          items:
+            type: string
+        references:
+          type: array
+          items:
+            type: string
+        spatial:
+          type: string
+        temporal:
+           type: string
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+    Distribution:
+      type: object
+      properties:
+        '@type':
+          type: string
+          example: "dcat:Distribution"
+        accessUrl:
+          type: string
+          example: "https://api.census.gov/data/timeseries/asm/state"
+        description:
+          type: string
+        format:
+          type: string
+        mediaType:
+          type: string
+        title:
+          type: string
+    ContactPoint:
+      type: object
+      properties:
+        fn:
+          type: string
+        hasEmail:
+          type: string
+    Publisher:
+      type: object
+      properties:
+        '@type':
+          type: string
+        name:
+          type: string
+        subOrganizationOf:
+          $ref: '#/components/schemas/Publisher'
+    Variables:
+      type: object
+      properties:
+        variables:
+          type: object
+          properties:
+            for:
+              $ref: '#/components/schemas/for'
+    for:
+      type: object
+      properties:
+        label:
+          type: string
+        concept:
+          type: string
+        required:
+          type: string
+        predicateType:
+          type: string
+        group:
+          type: string
+        limit:
+          type: integer
+        predicateOnly:
+          type: boolean
+    Geographies:
+      type: object
+      properties:
+        fips:
+          type: array
+          items:
+            $ref: '#/components/schemas/fips'
+    fips:
+      type: object
+      properties:
+        name:
+          type: string
+          example: county
+        geoLevelId: 
+          type: string
+          example: "03"
+        geoLevelDisplay:
+          type: string
+          example: "03"
+        limit: 
+          type: string
+        referenceDate: 
+          type: string
+        requres: 
+          type: array
+          items: 
+            type: string
+        wildcard: 
+          type: array
+          items: 
+            type: string
+        optionalWithWCFor: 
+          type: string
+          
+    exampleFips:
+      allOf:
+        - $ref: '#/components/schemas/fips'
+        - type: object
+          properties:
+            exampleValue: 
+              type: string
+              example: "013"
+            isOptionalWithWCFor: 
+              type: boolean
+            in:
+              type: array
+              items:
+                $ref: '#/components/schemas/exampleFips'
+              
+            
+    Examples:
+      type: object
+      properties:
+        get:
+          type: array
+          items:
+            type: string
+        predicates:
+          type: object
+          properties:
+            names:
+              type: string
+          
+        fips:
+          $ref: '#/components/schemas/exampleFips'
+  parameters:
+    dataset:
+      name: dataset
+      description: The dataset's id
+      in: path
+      required: true
+      schema:
+        type: string
+      example: "cbp"
+    year:
+      name: year
+      description: The year of the requested dataset
+      in: path
+      required: true
+      schema:
+        type: string
+      example: 1989
+    for:
+      name: for
+      in: query
+      required: false
+      allowReserved: true
+      schema:
+        type: string
+      description: >-
+            specify the geography for your query. (this is available from the geogrphy endpoint for your daaset). For example, if `state` was an available geography and we were looking to get data from all states, we could use the wildcard operator as  `&for=state:*`
+      example: state:*
+    get:
+      name: get
+      in: query
+      required: false
+      allowReserved: true
+      schema:
+        type: string
+      description: >-
+            get variables and their values. for example: `get=STNAME,POP&DATE_=7`
+      example: STNAME,POP
+    key:
+      name: key
+      in: query
+      required: false
+      schema:
+        type: string
+      description: >-
+            If you are using an API key, insert &key= followed by your key code at the end of your search `&key=your key here`
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+  links: {}
+  callbacks: {}
+security: []
