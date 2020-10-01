@@ -1,0 +1,44 @@
+---
+layout: default
+---
+
+<div class="collection__wrapper">
+   <div class="container">
+
+			<div class="row collection__header text-center">
+         <div class="col-md-12">
+            <h2 class="h1">{{ page.title }}</h2>
+						<p><span class="post-date">{{ page.date | date_to_string }}</span></p>
+        </div>
+      </div>
+
+      <div>
+
+				{{ content }}
+				<hr />
+				<p align="center"><a href="{{ site.url }}/index.html"><strong>Return to Main Page</strong></p>
+				<hr />
+				<table width="100%">
+					<tr>
+						<td align="left" width="50%">
+							{% if page.previous %}
+							   	<a href="{{ page.previous.url }}" class="older">&#8592; Older</a>
+							{% else %}
+								<a href="/" class="older">&#8592; Older</a>
+							{% endif %}
+						</td>
+						<td align="right" width="50%">
+						  {% if page.next %}
+						    <a href="{{ page.next.url }}" class="newer">Newer &#8594;</a>
+						  {% else %}
+						    <span class="next">Newer &#8594;</span>
+						  {% endif %}
+						</td>
+					</tr>
+				</table>
+
+      </div>
+
+   </div>
+</div>
+<br><br>

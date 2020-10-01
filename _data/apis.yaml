@@ -1,0 +1,42 @@
+---
+name: U.S. Census Bureau API Resource Center
+description: This is a toolbox of API collections, visualizations, and tooling to help developers discover and put APIs to work as part of integrations and applications. Providing a single landing page, documentation, and Postman collections that can be easily run using the Postman platform.
+image: https://postman-toolboxes2.s3.amazonaws.com/assets/postman-government.png
+tags:
+- APIs
+created: '2020-08-07'
+modified: '2020-10-01'
+url: https://postman-government.github.io/census/apis.json
+specificationVersion: '0.14'
+apis:
+- name: U.S. Census Bureau
+  description: In alignment with the Digital Government Strategy, the Census Bureau is offering the public wider access to key U.S. statistics. The Census application programming interface (API) lets developers create custom apps to reach new users and makes key demographic, socio-economic and housing statistics more accessible than ever before. The Census Bureau’s API allows developers to design web and mobile apps to explore or learn more about America's changing population and economy.
+  image: https://postman-toolboxes2.s3.amazonaws.com/assets/us-2020-election/us-census-bureau-lofo.png
+  tags:
+  - Census
+  - Population
+  - Federal Government
+  - Surveys
+  - Demographics
+  - Geographic
+  - United States
+  properties:
+  - type: x-website
+    url: https://www.census.gov/data/developers.html
+  - type: x-postman-documentation
+    url: https://documenter.getpostman.com/view/2220438/TVCgxS4Y
+  - type: x-run-in-postman
+    url: https://app.getpostman.com/run-collection/2220438-df0457fe-d465-4e8b-8a9b-4567c47e15ee-TVCgxS4Y
+  - type: x-rating
+    x-data:
+      rating: 8
+  - type: x-github-issue
+    url: https://github.com/postman-toolboxes2/us-2020-elections/issues/12
+  contact:
+  - FN: Postman
+    email: covid-19@postman.com
+    x-Tweets: getpostman
+maintainers:
+- FN: API Evangelist
+  x-Tweets: apievangelist
+  email: info@apievangelist

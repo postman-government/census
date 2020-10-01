@@ -1,0 +1,79 @@
+{% for api in index.apis %}
+  {% assign website_url = "none" %}
+  {% assign postman_docs = "none" %}
+  {% assign postman_run = "none" %}
+  {% assign github_url = "none" %}
+  {% assign twitter_url = "none" %}
+  {% assign rating = 0 %}
+  {% assign sources = "none" %}
+  {% assign sources_url = "none" %}
+  {% assign github_issue = "none" %}
+  {% assign apimetrics_casc = "none" %}
+  {% for property in api.properties %}
+    {% if property.type == 'x-website' %}{% assign website_url = property.url %}{% endif %}
+    {% if property.type == 'x-postman-documentation' %}{% assign postman_docs = property.url %}{% endif %}
+    {% if property.type == 'x-run-in-postman' %}{% assign postman_run = property.url %}{% endif %}
+    {% if property.type == 'x-github' %}{% assign github_url = property.url %}{% endif %}
+    {% if property.type == 'x-twitter' %}{% assign twitter_url = property.url %}{% endif %}
+    {% if property.type == 'x-rating' %}{% assign rating = property.x-data.rating %}{% endif %}
+    {% if property.type == 'x-github-issue' %}{% assign github_issue = property.url %}{% endif %}
+    {% if property.type == 'x-api-expert-casc' %}
+      {% assign apimetrics_casc = property.x-data %}
+      {% assign apimetrics_url = property.url %}
+    {% endif %}
+    {% if property.type == 'x-sources' %}
+      {% assign sources = property.x-data.sources %}
+      {% assign sources_url = property.url %}
+    {% endif %}
+  {% endfor %}
+
+  {% if rating >= rating_bottom %}
+    {% if rating <= rating_top %}
+      <div class="row collection">
+        <div class="col-md-6">
+           <div class="row collection__meta">
+              <div class="col-12 collection__description">{% if api.image %}<img src="{{ api.image }}" width="150" style="margin: 10px; border: 1px solid #000; background-color:#FFF;" align="left">{% endif %}<h3>{{ api.name }}</h3><p>{{ api.description }}</p><p><strong>Resources:</strong>{% for tag in api.tags %}{{ tag }}{% if forloop.last == true %}{% else %}, {% endif %}{% endfor %}</p></div>
+           </div>
+        </div>
+        <div class="col-md-6 collection_cta">
+          {% if website_url != 'none' %}<a class="landing btn btn__secondary-light" href="{{ website_url }}" title="Website">Website</a>{% endif %}
+          <a class="landing btn btn__secondary-light" title="Documentation" href="{{ postman_docs }}"{% if postman_docs == 'none' %} onclick="alert('Under developmet -- Visit Issue for More Info!'); return false;"{% endif %}>Docs</a>
+          <a class="btn btn__primary" title="Run in Postman" href="{{ postman_run }}"{% if postman_run == 'none' %} onclick="alert('Still Under Development!'); return false;"{% endif %}>Run in Postman</a>
+          {% if github_issue != 'none' %}<a href="{{ github_issue }}" target="_blank" title="GitHub Issue Conversation"><img src="https://postman-toolboxes2.s3.amazonaws.com/assets/github-issues-icon.png" width="60"></a>{% endif %}
+        </div>
+
+        {% if apimetrics_casc != "none" %}
+        <div class="col-md-7">
+           <div class="row collection__meta">
+             <table style="width: 100%; font-size: 14px;">
+              <tr>
+                <td width="170"><img src="https://postman-toolboxes2.s3.amazonaws.com/assets/apimetrics/apimetrics-logo.png" width="170" style="padding: 3px;"></td>
+                <td><strong>CASC Score:</strong> {{ apimetrics_casc.casc }}</td>
+                <td><strong>Pass Rate:</strong> {{ apimetrics_casc.passRate }}</td>
+                <td><strong>Outliers:</strong> {{ apimetrics_casc.outliers }}</td>
+                <td><strong>Median Latency:</strong> {{ apimetrics_casc.medianLatency }}</td>
+                <td><a href="{{ apimetrics_url }}" target="_blank">Details</td>
+              </tr>
+             </table>
+           </div>
+        </div>
+        {% endif %}
+
+        {% if sources != "none" %}
+          <div class="col-md-7">
+           <div class="row collection__meta">
+             <div class="col-12 collection__description"><strong>Sources:</strong></div>
+             <ul>
+               {% for source in sources %}
+                  <li><a href="{{ source.url }}">{{ source.name }}</a></li>
+               {% endfor %}
+             </ul>
+           </div>
+        </div>
+        {% endif %}
+
+      </div>
+    {% endif %}
+  {% endif %}
+{% endfor %}
+<br><br>

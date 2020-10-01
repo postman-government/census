@@ -1,0 +1,54 @@
+{% assign all_tags = "" %}
+{% for api in index.apis %}
+  {% for tag in api.tags %}
+    {% if all_tags contains tag %}
+    {% else %}
+      {% assign all_tags = all_tags | append: tag | append: ',' %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+{% assign all_tags = all_tags | split: "," | sort %}
+
+<center>
+<div class="tag-row" align="center">
+
+  <style type="text/css">
+    .wordcloud {
+    border: 1px solid #FFF;
+    height: 4in;
+    width: 100%;
+    padding: 25px;
+    margin: 10px;
+    }
+  </style>
+
+  <div id="wordcloud" class="wordcloud">
+  {% assign all_tags = "" %}
+  {% for api in index.apis %}
+    {% for tag in api.tags %}
+      {% if all_tags contains tag %}
+      {% else %}
+        {% assign all_tags = all_tags | append: tag | append: ',' %}
+        <span data-weight="18">{{ tag }}</span>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+  </div>
+
+  <script>
+  $(document).ready(function(){
+    $("#wordcloud").awesomeCloud({
+    "size" : {
+    "grid" : 15,
+    "factor" : 2},
+    "options" : {
+    "color" : "random-dark",
+    "rotationRatio" : 0},
+    "font" : "Times New Roman, Times, serif",
+    "shape" : "circle"});
+    });
+  </script>
+
+</div>
+</center>
