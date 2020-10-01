@@ -45,36 +45,6 @@ layout: default
 <div class="container-fluid">
    <div class="row blurb text-center">
       <div class="col-md-12">
-         <h2>Collections with Visualizations</h2>
-         <p class="collection__end_p">Some of the Postman collections published as part of this toolbox use Postman Visualizer to help make sense of the data returned from APIs.</p>
-      </div>
-      <div class="col-md-12">
-        {% include visualization-listing.html %}
-      </div>
-      <div class="col-md-12 blurb_padding"><a class="btn btn__secondary-light" href="https://learning.postman.com/docs/sending-requests/visualizer/">Learn More About Visualizer</a></div>
-   </div>
-</div>
-
-<div class="collection__wrapper">
-   <div class="container">
-
-			<div class="row collection__header text-center">
-         <div class="col-md-12">
-            <h2 class="h1">Resources Provided Across These {{ site.data.apis.apis | size }} API Collections</h2>
-        </div>
-      </div>
-
-      <div class="col-md-12">
-        {% include tag-listing.html %}
-      </div>
-      <br><br><br>
-
-   </div>
-</div>
-
-<div class="container-fluid">
-   <div class="row blurb text-center">
-      <div class="col-md-12">
          <h2>Thank You To Our Partners For Helping Make This Happen!</h2>
       </div>
       <div class="col-md-12">
@@ -82,31 +52,6 @@ layout: default
           <a href="{{ partner.url }}"><img src="{{ partner.image }}" width="25%" style="border: 2px solid #000; background-color:#FFF;"></a>
         {% endfor %}
       </div>
-   </div>
-</div>
-
-<div class="collection__wrapper">
-   <div class="container">
-
-			<div class="row collection__header text-center">
-         <div class="col-md-12">
-            <h2 class="h1">Additional API Collections</h2>
-        </div>
-      </div>
-
-      <div>
-        {% assign index = site.data.apis %}
-        {% assign rating_top = 7 %}
-        {% assign rating_bottom = 1 %}
-        {% include api-listing.html %}
-      </div>
-
-      <div class="row">
-         <div class="col-md-12">
-            <p class="collection__end">To submit an API to add to the list, please <span><a href="https://github.com/{{ site.github_user }}/{{ site.github_repo }}/issues" class="link-style">submit an issue on the Github repository for this toolbox</a>.</span></p>
-         </div>
-      </div>
-
    </div>
 </div>
 
